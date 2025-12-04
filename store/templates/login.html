@@ -1,0 +1,76 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/register.css' %}">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% if messages %}
+<div class="top-messages">
+    {% for message in messages %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error:</strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="container register">
+    <div class="row">
+
+        <!-- Left Blue Panel -->
+        <div class="col-md-3 register-left">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+            <h3>Welcome Back</h3>
+            <p>Login to access your account.</p>
+
+            <a href="{% url 'register' %}" class="btn btn-light mt-2">Register</a>
+        </div>
+
+        <!-- Right Form Panel -->
+        <div class="col-md-9 register-right">
+
+            <h3 class="register-heading">User Login</h3>
+
+            <form method="POST" class="row register-form">
+                {% csrf_token %}
+                <div class="col-md-6 offset-md-3">
+
+              <div class="form-group">
+    <input type="email" name="email" class="form-control" placeholder="Email *" list="email-list" required>
+    <datalist id="email-list">
+        {% for user_email in emails %}
+            <option value="{{ user_email }}">
+        {% endfor %}
+    </datalist>
+</div>
+
+
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control" placeholder="Password *" required>
+                    </div>
+
+                    <input type="submit" class="btnRegister" value="Login">
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
