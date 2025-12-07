@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block current_page %}Whiskey{% endblock current_page %}
+
+{% block header_link %}
+{% endblock header_link %}
+
+{% block body %}
+{% block navigation %}
+{{ block.super }}
+{% endblock navigation %}
+
+
+
+
+{% block footer %}
+{{ block.super }}
+{% endblock footer %}
+
+{% endblock body %}

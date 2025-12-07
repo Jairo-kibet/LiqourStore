@@ -1,30 +1,117 @@
 {% extends "index.html" %}
 {% load static %}
 
-{% block current_page %}Whiskey{% endblock current_page %}
-
-{% block header_link %}
-{% endblock header_link %}
+{% block current_page %}Wishlist{% endblock current_page %}
 
 {% block body %}
 {% block navigation %}
 {{ block.super }}
 {% endblock navigation %}
 
+
+
+<!-- HERO SECTION -->
+<section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'assets/images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-end justify-content-center">
+      <div class="col-md-9 ftco-animate mb-5 text-center">
+        <p class="breadcrumbs mb-0">
+          <span class="mr-2">
+            <a href="{% url 'index' %}">Home <i class="fa fa-chevron-right"></i></a>
+          </span>
+          <span>Wishlist <i class="fa fa-chevron-right"></i></span>
+        </p>
+        <h2 class="mb-0 bread">Wishlist</h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+{% if messages %}
+<div class="messages-container">
+  {% for message in messages %}
+    <div class="custom-alert alert-{{ message.tags }}">
+      {{ message }}
+      <button type="button" class="btn-close" onclick="this.parentElement.style.display='none';"></button>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+
+<!-- WISHLIST SECTION -->
 <section class="ftco-section">
-  <div class="container mt-5">
-    <h2 class="text-center mb-4">My Wishlist</h2>
+ <div class="container mt-5">
+    <h2 class="text-center mb-4">
+      <i class="fa-solid fa-heart" style="color:#ff4d4d; margin-right:8px;"></i>
+      My Wishlist
+    </h2>
+  </div>
 
     <div class="row">
       {% for item in items %}
       <div class="col-md-4 mb-4">
         <div class="product">
+
+          <!-- Product Image -->
           <div class="img" style="background-image:url('{{ item.whiskey.image.url }}')"></div>
 
-          <div class="text text-center">
-            <h3>{{ item.whiskey.name }}</h3>
-            <p>{{ item.whiskey.volume }} | Ksh {{ item.whiskey.price }}</p>
+          <!-- Product Content -->
+          <div class="text text-center product-details">
+
+            {% if item.whiskey.sale_price %}
+              <span class="sale">Sale</span>
+            {% endif %}
+
+            <!-- Category | ABV -->
+            <p class="text-muted category-abv">
+              {% if item.whiskey.category %}
+                {{ item.whiskey.category }}
+              {% else %}
+                Whiskey
+              {% endif %}
+              | {{ item.whiskey.abv }}
+            </p>
+
+            <!-- Name -->
+            <h3 class="whiskey-name">{{ item.whiskey.name }}</h3>
+
+            <!-- Volume | Price -->
+            {% if item.whiskey.sale_price %}
+              <p class="volume-price">{{ item.whiskey.volume }} | <span>Ksh {{ item.whiskey.sale_price }}</span></p>
+            {% else %}
+              <p class="volume-price">{{ item.whiskey.volume }} | <span>Ksh {{ item.whiskey.price }}</span></p>
+            {% endif %}
+
+            <!-- Description -->
+            {% if item.whiskey.description %}
+              <p class="whiskey-desc">{{ item.whiskey.description }}</p>
+            {% endif %}
+
+            <!-- ICON BUTTONS -->
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+
+              <!-- Add to Cart -->
+              <a class="dropdown-item text-center btn-link d-block icon-btn" 
+                 href="{% url 'add_to_cart' item.whiskey.id %}">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </a>
+
+              <!-- Remove from Wishlist -->
+              <form action="{% url 'remove_from_wishlist' item.id %}" method="POST" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn" style="border:none; background:none;">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </form>
+
+            </div>
+
           </div>
+
         </div>
       </div>
       {% empty %}
@@ -34,6 +121,127 @@
 
   </div>
 </section>
+
+<!-- CUSTOM STYLE -->
+<style>
+.product-details {
+  padding: 15px;
+}
+
+.category-abv {
+  font-size: 14px;
+  font-style: italic;
+  color: #6c757d;
+}
+
+.whiskey-name {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.volume-price span {
+  font-weight: bold;
+}
+
+.sale {
+  background: #ff0000;
+  color: #fff;
+  padding: 3px 8px;
+  font-size: 13px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.whiskey-desc {
+  color: #555;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.icon-buttons .icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  color: #333;
+  transition: 0.3s;
+  margin: 0 5px;
+}
+.icon-buttons {
+  gap: 50px;
+}
+.icon-buttons .icon-btn:hover {
+  transform: scale(1.15);
+  color: #ff7a00;
+}
+/* Messages container stays in place */
+.messages-container {
+  position: relative; /* stays in flow */
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto 0; /* centered with margin from top */
+  z-index: 9999;
+}
+
+/* Alert styling */
+.custom-alert {
+  position: relative;
+  padding: 12px 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  opacity: 0.95;
+  transition: opacity 0.5s ease;
+}
+
+/* Success and error colors */
+.custom-alert.alert-success {
+  background-color: #00f539;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.custom-alert.alert-error {
+  background-color: #f70015;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Close button */
+.custom-alert .btn-close {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Optional: auto-fade after 4 seconds */
+.custom-alert.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const alerts = document.querySelectorAll('.custom-alert');
+    alerts.forEach(alert => {
+      setTimeout(() => {
+        alert.classList.add('fade-out');
+        setTimeout(() => alert.remove(), 1000); // remove from DOM after fade
+      }, 4000); // 4 seconds
+    });
+  });
+</script>
 
 
 {% block footer %}

@@ -4,7 +4,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block current_page %}Liquor{% endblock current_page %} | Store</title>
+    <title>{% block current_page %}Home{% endblock current_page %} | LiqourStore</title>
+<!-- Font Awesome 6 CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -66,13 +68,17 @@
       </a>
 
       <!-- Cart Icon -->
-      <div class="btn-group mx-3">
-    <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-       aria-haspopup="true" aria-expanded="false"
-       style="font-size:22px; color:#8B4513; text-decoration:none;">
-       🛒
-       <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
-    </a>
+      <!-- Cart Icon -->
+<div class="btn-group mx-3">
+  <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+     aria-haspopup="true" aria-expanded="false"
+     style="font-size:22px; color:#8B4513; text-decoration:none;">
+     🛒
+     <div class="d-flex justify-content-center align-items-center">
+        <small>{{ cart_count }}</small>
+     </div>
+  </a>
+
 
     <div class="dropdown-menu dropdown-menu-right">
       <div class="dropdown-item d-flex align-items-start">
@@ -143,13 +149,14 @@
       <div class="col-md-8 ftco-animate d-flex align-items-end">
         <div class="text w-100 text-center">
           <h1 class="mb-4">Good <span>Drink</span> for Good <span>Moments</span>.</h1>
-          <p><a href="#" class="btn btn-primary py-2 px-4">Shop Now</a> <a href="#" class="btn btn-white btn-outline-white py-2 px-4">Read more</a></p>
+          <p><a href="product/" class="btn btn-primary py-2 px-4">Shop Now</a> <a href="about/" class="btn btn-white btn-outline-white py-2 px-4">Read more</a></p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+{% block about %}
 <section class="ftco-intro">
   <div class="container">
     <div class="row no-gutters">
@@ -158,10 +165,11 @@
           <div class="icon">
             <span class="flaticon-support"></span>
           </div>
-          <div class="text">
-            <h2>Online Support 24/7</h2>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-          </div>
+         <div class="text"> 
+  <h2>Premium Spirits at Your Fingertips</h2>
+  <p>Explore our curated selection of whiskeys, wines, and spirits. Enjoy seamless online shopping, fast delivery, and 24/7 support for all your beverage needs.</p>
+</div>
+
         </div>
       </div>
       <div class="col-md-4 d-flex">
@@ -169,10 +177,11 @@
           <div class="icon">
             <span class="flaticon-cashback"></span>
           </div>
-          <div class="text">
-            <h2>Money Back Guarantee</h2>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-          </div>
+       <div class="text">
+  <h2>Money Back Guarantee</h2>
+  <p>If you’re not satisfied with your order, we offer a hassle-free refund. Your trust and satisfaction are our top priority.</p>
+</div>
+
         </div>
       </div>
       <div class="col-md-4 d-flex">
@@ -180,10 +189,11 @@
           <div class="icon">
             <span class="flaticon-free-delivery"></span>
           </div>
-          <div class="text">
-            <h2>Free Shipping &amp; Return</h2>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-          </div>
+         <div class="text">
+  <h2>Free Shipping & Return</h2>
+  <p>Enjoy free shipping on all orders and hassle-free returns. Your favorite drinks delivered to your door, risk-free.</p>
+</div>
+
         </div>
       </div>
     </div>
@@ -200,10 +210,11 @@
           <span class="subheading">Since 1905</span>
           <h2 class="mb-4">Desire Meets A New Taste</h2>
 
-          <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-          <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country.</p>
+          <p>At Liqourstore, we bring your favorite drinks right to your doorstep, ensuring every order is handled with care and delivered safely. From rare whiskeys to popular spirits, we have something for every taste.</p>
+<p>Our commitment is to provide a seamless shopping experience. Explore our wide selection, and rest assured that quality and customer satisfaction are always our top priorities.</p>
+
           <p class="year">
-            <strong class="number" data-number="115">0</strong>
+            <strong class="number" data-number="20">0</strong>
             <span>Years of Experience In Business</span>
           </p>
         </div>
@@ -211,231 +222,199 @@
     </div>
   </div>
 </section>
+{% endblock about%}
 
 <section class="ftco-section">
-  <div class="container">
-    <div class="row justify-content-center pb-5">
-      <div class="col-md-7 heading-section text-center ftco-animate">
-        <span class="subheading">Our Delightful Offerings</span>
-        <h2>Tastefully Yours</h2>
-      </div>
-    </div>
+  <div class="container-fluid">
+    <div class="whiskey-grid text-center">
 
-    <div class="row d-flex flex-wrap justify-content-between">
       <!-- Product 1 -->
-      <div class="col-5-product mb-4">
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-1.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
-            </div>
-          </div>
-          <div class="text text-center">
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-1.jpg" %}');"></div>
+          <div class="text text-center product-details">
             <span class="sale">Sale</span>
-            <span class="category">Brandy</span>
-            <h2>Bacardi 151</h2>
-            <p class="mb-0"><span class="price price-sale">$69.00</span> <span class="price">$49.00</span></p>
+            <p class="text-muted category-abv">Brandy | 40% ABV</p>
+            <h3 class="whiskey-name">Bacardi 151</h3>
+            <p class="volume-price">750ml | <span>Ksh 4,900</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView1"><i class="fa-regular fa-eye"></i></button>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Product 2 -->
-      <div class="col-5-product mb-4">
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-2.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
-            </div>
-          </div>
-          <div class="text text-center">
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-2.jpg" %}');"></div>
+          <div class="text text-center product-details">
             <span class="seller">Best Seller</span>
-            <span class="category">Gin</span>
-            <h2>Jim Beam Kentucky Straight</h2>
-            <span class="price">$69.00</span>
+            <p class="text-muted category-abv">Gin | 37.5% ABV</p>
+            <h3 class="whiskey-name">Jim Beam Kentucky Straight</h3>
+            <p class="volume-price">750ml | <span>Ksh 2500</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView2"><i class="fa-regular fa-eye"></i></button>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Product 3 -->
-      <div class="col-5-product mb-4">
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-3.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
-            </div>
-          </div>
-          <div class="text text-center">
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-3.jpg" %}');"></div>
+          <div class="text text-center product-details">
             <span class="new">New Arrival</span>
-            <span class="category">Rum</span>
-            <h2>Citadelle</h2>
-            <span class="price">$69.00</span>
+            <p class="text-muted category-abv">Rum | 20% ABV</p>
+            <h3 class="whiskey-name">Citadelle</h3>
+            <p class="volume-price">700ml | <span>Ksh 1500</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView3"><i class="fa-regular fa-eye"></i></button>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Product 4 -->
-      <div class="col-5-product mb-4">
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-4.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-4.jpg" %}');"></div>
+          <div class="text text-center product-details">
+            <p class="text-muted category-abv">Rum | 25% ABV</p>
+            <h3 class="whiskey-name">The Glenlivet</h3>
+            <p class="volume-price">1000ml | <span>Ksh 4,900</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView4"><i class="fa-regular fa-eye"></i></button>
             </div>
-          </div>
-          <div class="text text-center">
-            <span class="category">Rum</span>
-            <h2>The Glenlivet</h2>
-            <span class="price">$69.00</span>
           </div>
         </div>
       </div>
 
       <!-- Product 5 -->
-      <div class="col-5-product mb-4">
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-5.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-5.jpg" %}');"></div>
+          <div class="text text-center product-details">
+            <p class="text-muted category-abv">Whiskey | 16% ABV</p>
+            <h3 class="whiskey-name">Black Label</h3>
+            <p class="volume-price">250ml | <span>Ksh 800</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView5"><i class="fa-regular fa-eye"></i></button>
             </div>
-          </div>
-          <div class="text text-center">
-            <span class="category">Whiskey</span>
-            <h2>Black Label</h2>
-            <span class="price">$69.00</span>
           </div>
         </div>
       </div>
 
-      <!-- Row 2 starts here -->
-
-            <!-- Product 6 -->
-      <div class="col-5-product mb-4">
+      <!-- Product 6 -->
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-6.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-6.jpg" %}');"></div>
+          <div class="text text-center product-details">
+            <p class="text-muted category-abv">Tequila | 38% ABV</p>
+            <h3 class="whiskey-name">Macallan</h3>
+            <p class="volume-price">500ml | <span>Ksh 1000</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView6"><i class="fa-regular fa-eye"></i></button>
             </div>
-          </div>
-          <div class="text text-center">
-            <span class="category">Tequila</span>
-            <h2>Macallan</h2>
-            <span class="price">$69.00</span>
           </div>
         </div>
       </div>
 
       <!-- Product 7 -->
-      <div class="col-5-product mb-4">
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-7.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-7.jpg" %}');"></div>
+          <div class="text text-center product-details">
+            <p class="text-muted category-abv">Vodka | 40% ABV</p>
+            <h3 class="whiskey-name">Old Monk</h3>
+            <p class="volume-price">1000ml | <span>Ksh 1200</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView7"><i class="fa-regular fa-eye"></i></button>
             </div>
-          </div>
-          <div class="text text-center">
-            <span class="category">Vodka</span>
-            <h2>Old Monk</h2>
-            <span class="price">$69.00</span>
           </div>
         </div>
       </div>
 
       <!-- Product 8 -->
-      <div class="col-5-product mb-4">
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-8.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-8.jpg" %}');"></div>
+          <div class="text text-center product-details">
+            <p class="text-muted category-abv">Whiskey | 40% ABV</p>
+            <h3 class="whiskey-name">Jameson Irish Whiskey</h3>
+            <p class="volume-price">750ml | <span>Ksh 2000</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView8"><i class="fa-regular fa-eye"></i></button>
             </div>
-          </div>
-          <div class="text text-center">
-            <span class="category">Whiskey</span>
-            <h2>Jameson Irish Whiskey</h2>
-            <span class="price">$69.00</span>
           </div>
         </div>
       </div>
 
       <!-- Product 9 -->
-      <div class="col-5-product mb-4">
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-9.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-9.jpg" %}');"></div>
+          <div class="text text-center product-details">
+            <p class="text-muted category-abv">Tequila | 30% ABV</p>
+            <h3 class="whiskey-name">Patron Silver</h3>
+            <p class="volume-price">500ml | <span>Ksh 850</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView9"><i class="fa-regular fa-eye"></i></button>
             </div>
-          </div>
-          <div class="text text-center">
-            <span class="category">Tequila</span>
-            <h2>Patron Silver</h2>
-            <span class="price">$69.00</span>
           </div>
         </div>
       </div>
 
       <!-- Product 10 -->
-      <div class="col-5-product mb-4">
+      <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" style="background-image: url('{% static "assets/images/prod-10.jpg" %}');">
-            <div class="desc">
-              <p class="meta-prod d-flex">
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-              </p>
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{% static "assets/images/prod-10.jpg" %}');"></div>
+          <div class="text text-center product-details">
+            <p class="text-muted category-abv">Vodka | 40% ABV</p>
+            <h3 class="whiskey-name">Grey Goose</h3>
+            <p class="volume-price">1000ml | <span>Ksh 3000</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView10"><i class="fa-regular fa-eye"></i></button>
             </div>
-          </div>
-          <div class="text text-center">
-            <span class="category">Vodka</span>
-            <h2>Grey Goose</h2>
-            <span class="price">$69.00</span>
           </div>
         </div>
       </div>
 
     </div>
-
-    <div class="row justify-content-center mt-4">
-      <div class="col-md-4">
-        <a href="product/" class="btn btn-primary d-block">View All Products <span class="fa fa-long-arrow-right"></span></a>
-      </div>
-    </div>
   </div>
 </section>
+
 
 <style>
   .col-5-product {
@@ -479,70 +458,208 @@
 
       <!-- Blog Post 1 -->
       <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-        <div class="blog-entry d-flex">
-          <a href="blog-single.html" class="block-20 img" style="background-image: url('{% static "assets/images/image_1.jpg" %}');">
-          </a>
-          <div class="text p-4 bg-light">
-            <div class="meta">
-              <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-            </div>
-            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurant</a></h3>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-          </div>
-        </div>
+  <div class="blog-entry d-flex">
+    <a href="blog-single.html" class="block-20 img" style="background-image: url('{% static "assets/images/image_1.jpg" %}');"></a>
+    <div class="text p-4 bg-light">
+      <div class="meta">
+        <p><span class="fa fa-calendar"></span> 23 April 2020</p>
       </div>
+      <h3 class="heading mb-3"><a href="#">Exploring the Art of Fine Whiskey Blending</a></h3>
+      <p>Learn how professional blenders craft smooth and premium whiskey using tradition, expertise, and patience.</p>
+      <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+    </div>
+  </div>
+</div>
 
-      <!-- Blog Post 2 -->
-      <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-        <div class="blog-entry d-flex">
-          <a href="blog-single.html" class="block-20 img" style="background-image: url('{% static "assets/images/image_2.jpg" %}');">
-          </a>
-          <div class="text p-4 bg-light">
-            <div class="meta">
-              <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-            </div>
-            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurant</a></h3>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-          </div>
-        </div>
+<!-- Blog Post 2 -->
+<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+  <div class="blog-entry d-flex">
+    <a href="blog-single.html" class="block-20 img" style="background-image: url('{% static "assets/images/image_2.jpg" %}');"></a>
+    <div class="text p-4 bg-light">
+      <div class="meta">
+        <p><span class="fa fa-calendar"></span> 23 April 2020</p>
       </div>
+      <h3 class="heading mb-3"><a href="#">Top 10 Drinks to Elevate Your Weekend</a></h3>
+      <p>Discover the best cocktails and spirits perfect for relaxing, entertaining, or hosting friends.</p>
+      <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+    </div>
+  </div>
+</div>
 
-      <!-- Blog Post 3 -->
-      <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-        <div class="blog-entry d-flex">
-          <a href="blog-single.html" class="block-20 img" style="background-image: url('{% static "assets/images/image_3.jpg" %}');">
-          </a>
-          <div class="text p-4 bg-light">
-            <div class="meta">
-              <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-            </div>
-            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurant</a></h3>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-          </div>
-        </div>
+<!-- Blog Post 3 -->
+<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+  <div class="blog-entry d-flex">
+    <a href="blog-single.html" class="block-20 img" style="background-image: url('{% static "assets/images/image_3.jpg" %}');"></a>
+    <div class="text p-4 bg-light">
+      <div class="meta">
+        <p><span class="fa fa-calendar"></span> 23 April 2020</p>
       </div>
+      <h3 class="heading mb-3"><a href="#">How to Choose the Perfect Drink for Any Occasion</a></h3>
+      <p>A simple guide to selecting spirits for birthdays, weddings, BBQs, dates, and home chilling.</p>
+      <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+    </div>
+  </div>
+</div>
 
-      <!-- Blog Post 4 -->
-      <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-        <div class="blog-entry d-flex">
-          <a href="blog-single.html" class="block-20 img" style="background-image: url('{% static "assets/images/image_4.jpg" %}');">
-          </a>
-          <div class="text p-4 bg-light">
-            <div class="meta">
-              <p><span class="fa fa-calendar"></span> 23 April 2020</p>
-            </div>
-            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurant</a></h3>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-            <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-          </div>
-        </div>
+<!-- Blog Post 4 -->
+<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+  <div class="blog-entry d-flex">
+    <a href="blog-single.html" class="block-20 img" style="background-image: url('{% static "assets/images/image_4.jpg" %}');"></a>
+    <div class="text p-4 bg-light">
+      <div class="meta">
+        <p><span class="fa fa-calendar"></span> 23 April 2020</p>
       </div>
+      <h3 class="heading mb-3"><a href="#">The Secret Behind Premium Liquor Quality</a></h3>
+      <p>From aging barrels to distillation methods, discover what makes top-shelf liquor truly exceptional.</p>
+      <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+    </div>
+  </div>
+</div>
+
 
     </div>
   </div>
+  <style>
+    /* Grid container: exactly 6 items per row */
+.whiskey-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Item container */
+.whiskey-item {
+  display: flex;
+  justify-content: center;
+}
+
+/* Product box */
+.product {
+  width: 100%;
+  height: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Product image */
+.product .img {
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* Text styling */
+.product-details p,
+.product-details h3 {
+  margin: 2px 0;
+  line-height: 1.2;
+}
+
+/* Category / ABV */
+.category-abv {
+  font-style: italic;
+  color: #888;
+  font-size: 14px;
+}
+
+/* Product name */
+.whiskey-name {
+  font-weight: bold;
+  font-size: 16px;
+  color: #222;
+}
+
+/* Volume and price */
+.volume-price {
+  font-size: 14px;
+  color: #333;
+}
+.volume-price span {
+  font-weight: bold;
+}
+
+/* Description */
+.whiskey-desc {
+  font-size: 12px;
+  color: #555;
+  margin-top: 4px;
+  line-height: 1.3;
+  min-height: 30px;
+}
+
+/* Icon buttons container */
+.icon-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+/* Individual icon buttons */
+.icon-buttons .icon-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.icon-buttons .icon-btn:hover {
+  color: orange;
+  transform: scale(1.2);
+}
+
+/* Sale badge */
+.sale {
+  background: #ff0000;
+  color: #fff;
+  padding: 2px 6px;
+  font-size: 12px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+/* Responsive: reduce columns on smaller screens */
+@media (max-width: 1200px) {
+  .whiskey-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .whiskey-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .whiskey-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 400px) {
+  .whiskey-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+  </style>
 </section>
 
  {% block footer %}
@@ -565,10 +682,10 @@
             <div class="ftco-footer-widget mb-4 ml-md-4">
               <h2 class="ftco-heading-2">My Accounts</h2>
               <ul class="list-unstyled">
-                <li><a href="profile"><span class="fa fa-chevron-right mr-2"></span>My Account</a></li>
-                <li><a href="register/"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-                <li><a href="login/"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
-                <li><a href="cart/"><span class="fa fa-chevron-right mr-2"></span>My Order</a></li>
+                <li><a href="{% url 'login' %}"><span class="fa fa-chevron-right mr-2"></span>My Account</a></li>
+                <li><a href="{% url 'register' %}"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
+                <li><a href="{% url 'login' %}"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
+                <li><a href="{% url 'cart' %}"><span class="fa fa-chevron-right mr-2"></span>My Order</a></li>
               </ul>
             </div>
           </div>
@@ -576,9 +693,9 @@
             <div class="ftco-footer-widget mb-4 ml-md-4">
               <h2 class="ftco-heading-2">Categories</h2>
               <ul class="list-unstyled">
-                   <li><a href="{% url 'about' %}"><span class="fa fa-chevron-right mr-2"></span>Whiskey</a></li>
-                   <li><a href="{% url 'contact' %}"><span class="fa fa-chevron-right mr-2"></span>Gin</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Beer</a></li>
+                   <li><a href="{% url 'whisky' %}"><span class="fa fa-chevron-right mr-2"></span>Whiskey</a></li>
+                   <li><a href=""><span class="fa fa-chevron-right mr-2"></span>Gin</a></li>
+                <li><a href="{% url 'beer' %}"><span class="fa fa-chevron-right mr-2"></span>Beer</a></li>
 
                  </ul>
             </div>
@@ -587,7 +704,7 @@
              <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Quick Link</h2>
               <ul class="list-unstyled">
-                <li><a href="conatact/"><span class="fa fa-chevron-right mr-2"></span>Contact Us</a></li>
+                <li><a href="contact/"><span class="fa fa-chevron-right mr-2"></span>Contact Us</a></li>
                 <li><a href="product/"><span class="fa fa-chevron-right mr-2"></span>Our Products</a></li>
                 <li><a href="about/"><span class="fa fa-chevron-right mr-2"></span>About us</a></li>
                 <li><a href="profile/"><span class="fa fa-chevron-right mr-2"></span>Profile</a></li>
@@ -601,7 +718,7 @@
 	              <ul>
 	                <li><span class="icon fa fa-map marker"></span><span class="text">203 Liqour Store, Nairobi, Kasarani, Kenya</span></li>
 	                <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+254 724 341 480</span></a></li>
-	                <li><a href="#"><span class="icon fa fa-paper-plane pr-4"></span><span class="text">https://jairotech.vercel.app/</span></a></li>
+	                <li><a href="https://jairotech.vercel.app"><span class="icon fa fa-paper-plane pr-4"></span><span class="text">JkTech</span></a></li>
 	              </ul>
 	            </div>
             </div>

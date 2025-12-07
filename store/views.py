@@ -41,10 +41,11 @@ def product(request):
 
 
 def cart(request):
-    return render(request, 'cart.html')
+    cart_items = Cart.objects.filter(user=request.user)
+    total_price = sum(item.whiskey.price * item.quantity for item in cart_items)
+    return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
 
-def checkout(request):
-    return render(request, 'checkout.html')
+
 
 def product_single(request):
     return render(request, 'product-single.html')
@@ -159,3 +160,146 @@ def login(request):
 def logout(request):
     request.session.flush()
     return redirect("login")
+
+
+def add_to_cart(request, id):
+    whiskey = get_object_or_404(Whiskey, id=id)
+    cart = request.session.get('cart', {})
+
+    key = str(whiskey.id)
+
+    if key in cart:
+        cart[key]['quantity'] += 1
+    else:
+        cart[key] = {
+            'name': whiskey.name,
+            'price': float(whiskey.price),  # make sure it's a number
+            'quantity': 1,
+            'image': whiskey.image.url
+        }
+
+    request.session['cart'] = cart
+    messages.success(request, f"{whiskey.name} added to cart.")
+    return redirect('whisky')
+
+
+def remove_from_wishlist(request, id):
+    try:
+        # Get the wishlist item by its ID
+        item = Wishlist.objects.get(id=id)
+    except Wishlist.DoesNotExist:
+        messages.error(request, "Item not found in wishlist.")
+        return redirect("wishlist")
+
+    whiskey_name = item.whiskey.name
+    item.delete()
+
+    messages.success(request, f"{whiskey_name} removed from wishlist.")
+    return redirect("wishlist")
+
+
+def cart(request):
+    cart = request.session.get('cart', {})
+
+    # FIX: remove old integer items from old cart system
+    cleaned_cart = {}
+    for key, item in cart.items():
+        if isinstance(item, dict):  # keep only new-format items
+            cleaned_cart[key] = item
+    request.session['cart'] = cleaned_cart
+    cart = cleaned_cart
+
+    cart_items = []
+    total_price = 0
+
+    for whiskey_id, data in cart.items():
+        item_total = data['price'] * data['quantity']
+        total_price += item_total
+
+        cart_items.append({
+            'id': whiskey_id,
+            'name': data['name'],
+            'price': data['price'],
+            'quantity': data['quantity'],
+            'image': data['image'],
+            'item_total': item_total
+        })
+
+    return render(request, 'cart.html', {
+        'cart_items': cart_items,
+        'total_price': total_price
+    })
+
+
+
+
+
+
+def remove_from_cart(request, id):
+    cart = request.session.get('cart', {})
+
+    if str(id) in cart:
+        del cart[str(id)]
+        request.session['cart'] = cart
+        messages.success(request, "Item removed from cart.")
+
+    return redirect('cart')
+
+
+def checkout(request):
+    cart = request.session.get('cart', {})
+    cart_items = []
+    total_price = 0
+
+    for item_id, item in cart.items():
+        cart_items.append({
+            'id': item_id,
+            'name': item['name'],
+            'price': item['price'],
+            'quantity': item['quantity'],
+            'total': item['price'] * item['quantity'],
+            'image': item['image'],
+        })
+        total_price += item['price'] * item['quantity']
+
+    return render(request, 'checkout.html', {
+        'cart_items': cart_items,
+        'total_price': total_price,
+    })
+
+
+def place_order(request):
+    if request.method == "POST":
+        first = request.POST.get("first_name")
+        last = request.POST.get("last_name")
+        phone = request.POST.get("phone")
+        email = request.POST.get("email")
+        address = request.POST.get("address")
+
+        cart = request.session.get('cart', {})
+
+        # save order
+        order = Order.objects.create(
+            first_name=first,
+            last_name=last,
+            phone=phone,
+            email=email,
+            address=address,
+            total_amount=sum(item['price'] * item['quantity'] for item in cart.values())
+        )
+
+        # save order items
+        for item_id, item in cart.items():
+            OrderItem.objects.create(
+                order=order,
+                product_id=item_id,
+                price=item['price'],
+                quantity=item['quantity']
+            )
+
+        # clear cart
+        request.session['cart'] = {}
+
+        messages.success(request, "Order placed successfully!")
+
+        return redirect('index')

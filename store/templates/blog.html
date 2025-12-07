@@ -38,10 +38,35 @@
           </a>
           <div class="text p-4 bg-light">
             <div class="meta">
-              <p><span class="fa fa-calendar"></span> 23 April 2020</p>
+              <p><span class="fa fa-calendar"></span> 06 December 2025</p>
             </div>
-            <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+
+            {% if i == "1" %}
+              <h3 class="heading mb-3"><a href="#">Top Beers to Enjoy This Season</a></h3>
+              <p>Discover the finest craft and popular beers at Liqourstore. From light lagers to rich stouts, we have something for every taste.</p>
+
+            {% elif i == "2" %}
+              <h3 class="heading mb-3"><a href="#">Whiskey & Gin: A Perfect Blend</a></h3>
+              <p>Learn about pairing whiskey and gin for cocktails, gifts, and tasting experiences. Tips and recipes from our experts at Liqourstore.</p>
+
+            {% elif i == "3" %}
+              <h3 class="heading mb-3"><a href="#">Exploring Gin Flavors Around the World</a></h3>
+              <p>Dive into the unique botanicals and flavors of gin from different countries. Discover your favorite style at Liqourstore.</p>
+
+            {% elif i == "4" %}
+              <h3 class="heading mb-3"><a href="#">Cocktails Made Simple</a></h3>
+              <p>Step-by-step guides to making delicious cocktails at home using our premium liquors. Impress your guests with ease!</p>
+
+            {% elif i == "5" %}
+              <h3 class="heading mb-3"><a href="#">Liqourstore Online Support 24/7</a></h3>
+              <p>Our dedicated support team is available anytime to help you with orders, recommendations, or any questions about our products.</p>
+
+            {% elif i == "6" %}
+              <h3 class="heading mb-3"><a href="#">Fast Delivery & Money-Back Guarantee</a></h3>
+              <p>Enjoy fast, reliable shipping on all orders. If you’re not satisfied, our money-back guarantee ensures your peace of mind.</p>
+
+            {% endif %}
+
             <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
           </div>
         </div>
@@ -49,23 +74,10 @@
       {% endfor %}
 
     </div>
-    <div class="row mt-5">
-      <div class="col text-center">
-        <div class="block-27">
-          <ul>
-            <li><a href="#">&lt;</a></li>
-            <li class="active"><span>1</span></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&gt;</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
+
+
 
 {% block footer %}
 {{ block.super }}

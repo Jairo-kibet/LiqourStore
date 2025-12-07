@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block current_page %}Whiskey{% endblock current_page %}
-
 {% block header_link %}{% endblock header_link %}
 
 {% block body %}
@@ -12,25 +11,15 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-{% if messages %}
-<div class="top-messages">
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
-
+<!-- HERO SECTION -->
 <section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'assets/images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text align-items-end justify-content-center">
       <div class="col-md-9 ftco-animate mb-5 text-center">
         <p class="breadcrumbs mb-0">
-          <span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span>
-          <span>Whisky <i class="fa fa-chevron-right"></i></span>
+          <span class="mr-2"><a href="{% url 'index' %}">Home <i class="fa fa-chevron-right"></i></a></span>
+          <span>Whiskey <i class="fa fa-chevron-right"></i></span>
         </p>
         <h2 class="mb-0 bread">Whiskeys</h2>
       </div>
@@ -38,16 +27,27 @@
   </div>
 </section>
 
+<!-- Messages -->
+{% if messages %}
+<div class="top-messages">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 <!-- Whiskey products grid -->
 <section class="ftco-section">
-  <div class="container-fluid"> <!-- full-width container -->
+  <div class="container-fluid">
     <div class="whiskey-grid text-center">
       {% for whiskey in whiskeys %}
       <div class="whiskey-item">
         <div class="product ftco-animate">
           <div class="img d-flex align-items-center justify-content-center" 
-               style="background-image: url('{{ whiskey.image.url }}'); border-radius:10px;">
-          </div>
+               style="background-image: url('{{ whiskey.image.url }}');"></div>
 
           <div class="text text-center product-details">
             {% if whiskey.sale_price %}
@@ -55,45 +55,73 @@
             {% endif %}
 
             <p class="text-muted category-abv">
-              {% if whiskey.category %}{{ whiskey.category }}{% else %}Whiskey{% endif %} | {{ whiskey.abv }}
+              {{ whiskey.category|default:"Whiskey" }} | {{ whiskey.abv }}
             </p>
 
             <h3 class="whiskey-name">{{ whiskey.name }}</h3>
 
-            {% if whiskey.sale_price %}
-              <p class="volume-price">{{ whiskey.volume }} | <span>Ksh {{ whiskey.sale_price }}</span></p>
-            {% else %}
-              <p class="volume-price">{{ whiskey.volume }} | <span>Ksh {{ whiskey.price }}</span></p>
-            {% endif %}
+            <p class="volume-price">{{ whiskey.volume }} | <span>Ksh {{ whiskey.sale_price|default:whiskey.price }}</span></p>
 
             {% if whiskey.description %}
               <p class="whiskey-desc">{{ whiskey.description }}</p>
             {% endif %}
 
             <!-- Icons -->
-           <div class="d-flex justify-content-center mt-3 icon-buttons">
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <form action="{% url 'add_to_cart' whiskey.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </button>
+              </form>
 
-  <!-- Cart icon -->
-  <a class="icon-btn" href="{% url 'cart' %}">
-    <i class="fa-solid fa-cart-shopping"></i>
-  </a>
+              <form action="{% url 'add_to_wishlist' whiskey.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn">
+                  <i class="fa-regular fa-heart"></i>
+                </button>
+              </form>
 
-  <!-- Wishlist icon -->
-  <form action="{% url 'add_to_wishlist' whiskey.id %}" method="POST" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" class="icon-btn">
-        <i class="fa-regular fa-heart"></i>
-    </button>
-  </form>
+              <!-- Quick View Button -->
+              <button type="button" class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal{{ whiskey.id }}">
+                  <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <!-- Preview / view icon -->
-  <a href="#" class="icon-btn">
-    <i class="fa-regular fa-eye"></i>
-  </a>
-
-</div>
-
-
+      <!-- Quick View Modal for THIS whiskey -->
+      <div class="modal fade" id="quickViewModal{{ whiskey.id }}" tabindex="-1" aria-labelledby="quickViewLabel{{ whiskey.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="quickViewLabel{{ whiskey.id }}">{{ whiskey.name }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body d-flex flex-column flex-md-row">
+              <div class="modal-img me-md-4 mb-3 mb-md-0" style="flex:1;">
+                <img src="{{ whiskey.image.url }}" alt="{{ whiskey.name }}" style="width:100%; border-radius:10px;">
+              </div>
+              <div class="modal-details" style="flex:1;">
+                <p class="category-abv">{{ whiskey.category|default:"Whiskey" }} | {{ whiskey.abv }}</p>
+                <h3 class="whiskey-name">{{ whiskey.name }}</h3>
+                <p class="volume-price">{{ whiskey.volume }} | <span>Ksh {{ whiskey.price }}</span></p>
+                {% if whiskey.description %}
+                <p class="whiskey-desc">{{ whiskey.description }}</p>
+                {% endif %}
+                <div class="d-flex mt-3 gap-3">
+                  <form action="{% url 'add_to_cart' whiskey.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                  </form>
+                  <form action="{% url 'add_to_wishlist' whiskey.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">Add to Wishlist</button>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -103,146 +131,67 @@
 </section>
 
 <style>
-/* Product text spacing */
-.product-details p,
-.product-details h3 {
-  margin: 2px 0;
-  line-height: 1.2;
-}
-
-/* Category / ABV */
-.category-abv {
-  font-style: italic;
-  color: #888;
-  font-size: 14px;
-}
-
-/* Name */
-.whiskey-name {
-  font-weight: bold;
-  font-size: 8px;
-  color: #222;
-}
-
-/* Volume / Price */
-.volume-price {
-  font-size: 14px;
-  color: #333;
-}
-.volume-price span {
-  font-weight: bold;
-}
-
-/* Description */
-.whiskey-desc {
-  font-size: 10px;
-  color: #555;
-  margin-top: 4px;
-}
-
-/* Icons container */
-.icon-buttons {
-  gap: 30px;
-}
-.icon-buttons .icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  background: none;
-  border: none;       /* remove any button border */
-  padding: 0;         /* remove button padding */
-  color: #333;
-  font-size: 22px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.icon-buttons .icon-btn:hover {
-  color: #ff6f61;    /* hover color for all icons */
-  transform: scale(1.2);
-}
-
-
-/* 5-column grid centered */
+/* Whiskey Grid Full Width */
 .whiskey-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr); /* exactly 6 items per row */
   gap: 20px;
-  max-width: 1400px; /* ensure full width for equal margins */
-  margin: 0 auto;
-  padding: 0 20px;
-}
-.whiskey-item {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-/* Product container */
-.product {
   width: 100%;
-  height: 600px; /* increased total container height to fit bigger image */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* allow image to take more space at top */
-  align-items: center;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: #fff;
+  padding: 0 15px;
   box-sizing: border-box;
 }
 
-/* Image inside product */
-.product .img {
-  width: 100%;
-  height: 400px; /* increased from 180px to 250px */
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px; /* only image rounded */
-  margin-bottom: 10px;
-}
+/* Item and Product styling */
+.whiskey-item { display: flex; justify-content: center; }
+.product { width: 100%; height: auto; border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px; background: #fff; display: flex; flex-direction: column; align-items: center; }
+.product .img { width: 100%; height: 400px; background-size: cover; background-position: center; border-radius: 10px; margin-bottom: 10px; }
+.product-details p, .product-details h3 { margin: 2px 0; line-height: 1.2; }
 
+/* Category / ABV */
+.category-abv { font-style: italic; color: #888; font-size: 14px; }
+.whiskey-name { font-weight: bold; font-size: 16px; color: #222; }
+.volume-price { font-size: 14px; color: #333; }
+.volume-price span { font-weight: bold; }
+.whiskey-desc { font-size: 12px; color: #555; margin-top: 4px; }
 
-/* Responsive */
-@media (max-width: 1400px) { .whiskey-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 1200px) { .whiskey-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 768px) { .whiskey-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .whiskey-grid { grid-template-columns: repeat(1, 1fr); } }
+/* Icons */
+.icon-buttons { gap: 15px; flex-wrap: wrap; }
+.icon-buttons .icon-btn { width: 40px; height: 40px; font-size: 18px; color: #333; display: flex; justify-content: center; align-items: center; border: none; background: none; cursor: pointer; transition: 0.3s; }
+.icon-buttons .icon-btn:hover { color: orange; transform: scale(1.2); }
+
+/* Sale badge */
+.sale { background: #ff0000; color: #fff; padding: 2px 6px; font-size: 12px; border-radius: 5px; display: inline-block; margin-bottom: 5px; }
 
 /* Messages */
-.top-messages {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 95%;
-    max-width: 500px;
-    z-index: 3000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.top-messages { 
+    width: 100%;
+    max-width: 500px; 
+    margin: 20px auto; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
 }
-.top-messages .alert {
-    border-radius: 10px;
-    padding: 1rem 1.3rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #fff;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    animation: slideDown 0.45s ease-out;
-    border: none;
+.top-messages .alert { 
+    border-radius: 10px; 
+    padding: 1rem 1.3rem; 
+    font-size: 1rem; 
+    font-weight: 500; 
+    color: #ff0b0b; 
+    text-align: center; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25); 
+    border: none; 
 }
 .top-messages .alert-success { background: #28a745; }
 .top-messages .alert-danger { background: #dc3545; }
 .top-messages .alert .close { color: #fff; opacity: 0.9; font-size: 1.3rem; line-height: 1; }
 .top-messages .alert .close:hover { opacity: 1; }
-@keyframes slideDown { 0% { transform: translate(-50%, -35px); opacity: 0; } 100% { transform: translate(-50%, 0); opacity: 1; } }
 
+/* Responsive */
+@media (max-width: 1400px) { .whiskey-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 1200px) { .whiskey-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 992px)  { .whiskey-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px)  { .whiskey-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .whiskey-grid { grid-template-columns: repeat(1, 1fr); } }
 </style>
 
 {% block footer %}

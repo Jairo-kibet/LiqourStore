@@ -111,3 +111,14 @@ class Wishlist(models.Model):
 
 
   
+class Cart(models.Model):
+    whiskey = models.ForeignKey('Whiskey', on_delete=models.CASCADE)  # Or Product
+    quantity = models.PositiveIntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.whiskey.name} ({self.quantity})"
+    
+    @property
+    def item_total(self):
+        return self.whiskey.price * self.quantity
