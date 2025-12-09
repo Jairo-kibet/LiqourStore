@@ -231,7 +231,7 @@
       <!-- Product 1 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-1.jpg" %}');"></div>
           <div class="text text-center product-details">
             <span class="sale">Sale</span>
@@ -239,9 +239,17 @@
             <h3 class="whiskey-name">Bacardi 151</h3>
             <p class="volume-price">750ml | <span>Ksh 4,900</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView1"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 1 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 1 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView1">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -250,17 +258,25 @@
       <!-- Product 2 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-2.jpg" %}');"></div>
           <div class="text text-center product-details">
             <span class="seller">Best Seller</span>
             <p class="text-muted category-abv">Gin | 37.5% ABV</p>
             <h3 class="whiskey-name">Jim Beam Kentucky Straight</h3>
-            <p class="volume-price">750ml | <span>Ksh 2500</span></p>
+            <p class="volume-price">750ml | <span>Ksh 2,500</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView2"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 2 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 2 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView2">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -269,17 +285,25 @@
       <!-- Product 3 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-3.jpg" %}');"></div>
           <div class="text text-center product-details">
             <span class="new">New Arrival</span>
             <p class="text-muted category-abv">Rum | 20% ABV</p>
             <h3 class="whiskey-name">Citadelle</h3>
-            <p class="volume-price">700ml | <span>Ksh 1500</span></p>
+            <p class="volume-price">700ml | <span>Ksh 1,500</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView3"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 3 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 3 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView3">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -288,16 +312,24 @@
       <!-- Product 4 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-4.jpg" %}');"></div>
           <div class="text text-center product-details">
             <p class="text-muted category-abv">Rum | 25% ABV</p>
             <h3 class="whiskey-name">The Glenlivet</h3>
             <p class="volume-price">1000ml | <span>Ksh 4,900</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView4"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 4 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 4 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView4">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -306,16 +338,24 @@
       <!-- Product 5 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-5.jpg" %}');"></div>
           <div class="text text-center product-details">
             <p class="text-muted category-abv">Whiskey | 16% ABV</p>
             <h3 class="whiskey-name">Black Label</h3>
             <p class="volume-price">250ml | <span>Ksh 800</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView5"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 5 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 5 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView5">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -324,16 +364,24 @@
       <!-- Product 6 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-6.jpg" %}');"></div>
           <div class="text text-center product-details">
             <p class="text-muted category-abv">Tequila | 38% ABV</p>
             <h3 class="whiskey-name">Macallan</h3>
-            <p class="volume-price">500ml | <span>Ksh 1000</span></p>
+            <p class="volume-price">500ml | <span>Ksh 1,000</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView6"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 6 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 6 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView6">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -342,16 +390,24 @@
       <!-- Product 7 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-7.jpg" %}');"></div>
           <div class="text text-center product-details">
             <p class="text-muted category-abv">Vodka | 40% ABV</p>
             <h3 class="whiskey-name">Old Monk</h3>
-            <p class="volume-price">1000ml | <span>Ksh 1200</span></p>
+            <p class="volume-price">1000ml | <span>Ksh 1,200</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView7"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 7 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 7 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView7">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -360,16 +416,24 @@
       <!-- Product 8 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-8.jpg" %}');"></div>
           <div class="text text-center product-details">
             <p class="text-muted category-abv">Whiskey | 40% ABV</p>
             <h3 class="whiskey-name">Jameson Irish Whiskey</h3>
-            <p class="volume-price">750ml | <span>Ksh 2000</span></p>
+            <p class="volume-price">750ml | <span>Ksh 2,000</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView8"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 8 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 8 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView8">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -378,16 +442,24 @@
       <!-- Product 9 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-9.jpg" %}');"></div>
           <div class="text text-center product-details">
             <p class="text-muted category-abv">Tequila | 30% ABV</p>
             <h3 class="whiskey-name">Patron Silver</h3>
             <p class="volume-price">500ml | <span>Ksh 850</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView9"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 9 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 9 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView9">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -396,16 +468,51 @@
       <!-- Product 10 -->
       <div class="whiskey-item">
         <div class="product ftco-animate">
-          <div class="img d-flex align-items-center justify-content-center" 
+          <div class="img d-flex align-items-center justify-content-center"
                style="background-image: url('{% static "assets/images/prod-10.jpg" %}');"></div>
           <div class="text text-center product-details">
             <p class="text-muted category-abv">Vodka | 40% ABV</p>
             <h3 class="whiskey-name">Grey Goose</h3>
-            <p class="volume-price">1000ml | <span>Ksh 3000</span></p>
+            <p class="volume-price">1000ml | <span>Ksh 3,000</span></p>
             <div class="d-flex justify-content-center mt-3 icon-buttons">
-              <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-              <button class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView10"><i class="fa-regular fa-eye"></i></button>
+              <form action="{% url 'add_to_cart' 10 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 10 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView10">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 11 -->
+      <div class="whiskey-item">
+        <div class="product ftco-animate">
+          <div class="img d-flex align-items-center justify-content-center"
+               style="background-image: url('{% static "assets/images/redlabel.jpg" %}');"></div>
+          <div class="text text-center product-details">
+            <span class="sale">Sale</span>
+            <p class="text-muted category-abv">Blended Scotch | 40% ABV</p>
+            <h3 class="whiskey-name">Red Label</h3>
+            <p class="volume-price">750ml | <span>Ksh 4,900</span></p>
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <form action="{% url 'add_to_cart' 11 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+              </form>
+              <form action="{% url 'add_to_wishlist' 11 %}" method="POST" style="margin-right:5px;">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+              </form>
+              <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickView11">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -414,6 +521,11 @@
     </div>
   </div>
 </section>
+
+
+
+
+
 
 
 <style>
@@ -759,6 +871,92 @@
   <script src="{% static 'assets/js/google-map.js' %}"></script>
   <script src="{% static 'assets/js/main.js' %}"></script>
    {% endblock footer %} {% endblock body %}
+   <!-- AGE VERIFICATION POPUP -->
+<div id="ageModal" class="age-modal">
+  <div class="age-modal-content">
+    <h2>Age Verification</h2>
+    <p>You must be 18 years or older to enter this website.</p>
+
+    <input type="number" id="birthYear" class="age-input" placeholder="Enter Birth Year (e.g 2005)">
+    
+    <button class="age-btn" onclick="verifyAge()">Enter</button>
+  </div>
+</div>
+<style>
+.age-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.age-modal-content {
+  background: #fff;
+  padding: 25px;
+  width: 90%;
+  max-width: 380px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.age-input {
+  width: 90%;
+  padding: 10px;
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.age-btn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  background: #8B4513;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.age-btn:hover {
+  background: #A0522D;
+}
+</style>
+
+<script>
+function verifyAge() {
+    let year = document.getElementById("birthYear").value;
+
+    if (!year || year.length < 4) {
+        alert("Please enter a valid birth year.");
+        return;
+    }
+
+    let age = new Date().getFullYear() - parseInt(year);
+
+    if (age >= 18) {
+        localStorage.setItem("ageVerified", "true");
+        document.getElementById("ageModal").style.display = "none";
+    } else {
+        alert("You are not allowed to access this site.");
+        window.location.href = "https://www.google.com/";
+    }
+}
+
+// SHOW POPUP ONLY ON FIRST VISIT
+window.onload = function() {
+    if (!localStorage.getItem("ageVerified")) {
+        document.getElementById("ageModal").style.display = "flex";
+    } else {
+        document.getElementById("ageModal").style.display = "none";
+    }
+}
+</script>
+
+
   </body>
 </html>
  

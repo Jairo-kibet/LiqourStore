@@ -31,33 +31,45 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 {% if messages %}
-<div class="messages-container">
+<div class="messages-wrapper">
   {% for message in messages %}
-    <div class="custom-alert alert-{{ message.tags }}">
-      {{ message }}
-      <button type="button" class="btn-close" onclick="this.parentElement.style.display='none';"></button>
+    <div class="msg-card msg-{{ message.tags }}">
+      <span class="msg-icon">
+        {% if message.tags == "success" %}
+          <i class="fa-solid fa-circle-check"></i>
+        {% elif message.tags == "error" or message.tags == "danger" %}
+          <i class="fa-solid fa-circle-xmark"></i>
+        {% elif message.tags == "warning" %}
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        {% else %}
+          <i class="fa-solid fa-circle-info"></i>
+        {% endif %}
+      </span>
+
+      <span class="msg-text">{{ message }}</span>
+
+      <button class="msg-close" onclick="this.parentElement.remove();">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
   {% endfor %}
 </div>
 {% endif %}
 
 
+
 <!-- WISHLIST SECTION -->
 <section class="ftco-section">
- <div class="container mt-5">
-    <h2 class="text-center mb-4">
-      <i class="fa-solid fa-heart" style="color:#ff4d4d; margin-right:8px;"></i>
-      My Wishlist
-    </h2>
-  </div>
+  <div class="container-fluid">
+    <div class="whiskey-grid text-center">
 
-    <div class="row">
       {% for item in items %}
-      <div class="col-md-4 mb-4">
-        <div class="product">
+      <div class="whiskey-item">
+        <div class="product ftco-animate">
 
           <!-- Product Image -->
-          <div class="img" style="background-image:url('{{ item.whiskey.image.url }}')"></div>
+          <div class="img d-flex align-items-center justify-content-center"
+               style="background-image: url('{{ item.whiskey.image.url }}');"></div>
 
           <!-- Product Content -->
           <div class="text text-center product-details">
@@ -68,167 +80,219 @@
 
             <!-- Category | ABV -->
             <p class="text-muted category-abv">
-              {% if item.whiskey.category %}
-                {{ item.whiskey.category }}
-              {% else %}
-                Whiskey
-              {% endif %}
-              | {{ item.whiskey.abv }}
+              {{ item.whiskey.category|default:"Whiskey" }} | {{ item.whiskey.abv }}
             </p>
 
             <!-- Name -->
             <h3 class="whiskey-name">{{ item.whiskey.name }}</h3>
 
             <!-- Volume | Price -->
-            {% if item.whiskey.sale_price %}
-              <p class="volume-price">{{ item.whiskey.volume }} | <span>Ksh {{ item.whiskey.sale_price }}</span></p>
-            {% else %}
-              <p class="volume-price">{{ item.whiskey.volume }} | <span>Ksh {{ item.whiskey.price }}</span></p>
-            {% endif %}
+            <p class="volume-price">
+              {{ item.whiskey.volume }} |
+              <span>Ksh {{ item.whiskey.sale_price|default:item.whiskey.price }}</span>
+            </p>
 
-            <!-- Description -->
             {% if item.whiskey.description %}
               <p class="whiskey-desc">{{ item.whiskey.description }}</p>
             {% endif %}
 
-            <!-- ICON BUTTONS -->
+            <!-- ICONS -->
             <div class="d-flex justify-content-center mt-3 icon-buttons">
 
               <!-- Add to Cart -->
-              <a class="dropdown-item text-center btn-link d-block icon-btn" 
-                 href="{% url 'add_to_cart' item.whiskey.id %}">
-                <i class="fa-solid fa-cart-shopping"></i>
-              </a>
+              <form action="{% url 'add_to_cart' item.whiskey.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </button>
+              </form>
 
               <!-- Remove from Wishlist -->
-              <form action="{% url 'remove_from_wishlist' item.id %}" method="POST" style="display:inline;">
+              <form action="{% url 'remove_from_wishlist' item.id %}" method="POST">
                 {% csrf_token %}
-                <button type="submit" class="icon-btn" style="border:none; background:none;">
+                <button type="submit" class="icon-btn wishlist-btn">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </form>
 
+              <!-- Quick View -->
+              <button type="button" class="icon-btn"
+                      data-bs-toggle="modal" data-bs-target="#quickViewModal{{ item.id }}">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
 
           </div>
-
         </div>
       </div>
-      {% empty %}
-      <p class="text-center">No items in your wishlist.</p>
-      {% endfor %}
-    </div>
 
+      <!-- QUICK VIEW MODAL -->
+      <div class="modal fade" id="quickViewModal{{ item.id }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h5 class="modal-title">{{ item.whiskey.name }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body d-flex flex-column flex-md-row">
+              <div class="modal-img me-md-4 mb-3 mb-md-0" style="flex:1;">
+                <img src="{{ item.whiskey.image.url }}" class="img-fluid" style="border-radius:10px;">
+              </div>
+
+              <div class="modal-details" style="flex:1;">
+                <p class="category-abv">{{ item.whiskey.category|default:"Whiskey" }} | {{ item.whiskey.abv }}</p>
+                <h3 class="whiskey-name">{{ item.whiskey.name }}</h3>
+                <p class="volume-price">{{ item.whiskey.volume }} | 
+                   <span>Ksh {{ item.whiskey.price }}</span></p>
+
+                {% if item.whiskey.description %}
+                  <p class="whiskey-desc">{{ item.whiskey.description }}</p>
+                {% endif %}
+
+                <div class="d-flex mt-3 gap-3">
+                  <form action="{% url 'add_to_cart' item.whiskey.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                  </form>
+
+                  <form action="{% url 'remove_from_wishlist' item.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                  </form>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% empty %}
+        <p class="text-center">No items in your wishlist.</p>
+      {% endfor %}
+
+    </div>
   </div>
 </section>
 
+
 <!-- CUSTOM STYLE -->
 <style>
-.product-details {
-  padding: 15px;
-}
-
-.category-abv {
-  font-size: 14px;
-  font-style: italic;
-  color: #6c757d;
-}
-
-.whiskey-name {
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.volume-price span {
-  font-weight: bold;
-}
-
-.sale {
-  background: #ff0000;
-  color: #fff;
-  padding: 3px 8px;
-  font-size: 13px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  display: inline-block;
-}
-
-.whiskey-desc {
-  color: #555;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-.icon-buttons .icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  font-size: 22px;
-  color: #333;
-  transition: 0.3s;
-  margin: 0 5px;
-}
-.icon-buttons {
-  gap: 50px;
-}
-.icon-buttons .icon-btn:hover {
-  transform: scale(1.15);
-  color: #ff7a00;
-}
-/* Messages container stays in place */
-.messages-container {
-  position: relative; /* stays in flow */
+/* Whiskey Grid Full Width */
+.whiskey-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* exactly 6 items per row */
+  gap: 20px;
   width: 100%;
-  max-width: 600px;
-  margin: 20px auto 0; /* centered with margin from top */
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Item and Product styling */
+.whiskey-item { display: flex; justify-content: center; }
+.product { width: 100%; height: auto; border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px; background: #fff; display: flex; flex-direction: column; align-items: center; }
+.product .img { width: 100%; height: 400px; background-size: cover; background-position: center; border-radius: 10px; margin-bottom: 10px; }
+.product-details p, .product-details h3 { margin: 2px 0; line-height: 1.2; }
+
+/* Category / ABV */
+.category-abv { font-style: italic; color: #888; font-size: 14px; }
+.whiskey-name { font-weight: bold; font-size: 16px; color: #222; }
+.volume-price { font-size: 14px; color: #333; }
+.volume-price span { font-weight: bold; }
+.whiskey-desc { font-size: 12px; color: #555; margin-top: 4px; }
+
+/* Icons */
+.icon-buttons { gap: 15px; flex-wrap: wrap; }
+.icon-buttons .icon-btn { width: 40px; height: 40px; font-size: 18px; color: #333; display: flex; justify-content: center; align-items: center; border: none; background: none; cursor: pointer; transition: 0.3s; }
+.icon-buttons .icon-btn:hover { color: orange; transform: scale(1.2); }
+
+/* Sale badge */
+.sale { background: #ff0000; color: #fff; padding: 2px 6px; font-size: 12px; border-radius: 5px; display: inline-block; margin-bottom: 5px; }
+
+/* Messages */
+/* MESSAGE WRAPPER */
+.messages-wrapper {
+  width: 100%;
+  max-width: 650px;
+  margin: 20px auto;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   z-index: 9999;
 }
 
-/* Alert styling */
-.custom-alert {
-  position: relative;
-  padding: 12px 18px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  font-weight: 500;
+/* MESSAGE CARD */
+.msg-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  opacity: 0.95;
-  transition: opacity 0.5s ease;
+  gap: 12px;
+  padding: 15px 18px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  
+  color: #e50101;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  animation: fadeIn 0.4s ease-out;
+  position: relative;
 }
 
-/* Success and error colors */
-.custom-alert.alert-success {
-  background-color: #00f539;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+/* FADE OUT AFTER 4s */
+.msg-card.fade-out {
+  animation: fadeOut 1s forwards;
 }
 
-.custom-alert.alert-error {
-  background-color: #f70015;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+/* ICON */
+.msg-icon {
+  font-size: 20px;
 }
 
-/* Close button */
-.custom-alert .btn-close {
-  background: transparent;
+/* CLOSE BUTTON */
+.msg-close {
+  background: none;
   border: none;
-  font-size: 18px;
-  line-height: 1;
+  color: #fff;
+  font-size: 19px;
   cursor: pointer;
-  color: inherit;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.8;
+  transition: 0.3s;
 }
 
-/* Optional: auto-fade after 4 seconds */
-.custom-alert.fade-out {
-  opacity: 0;
-  transition: opacity 1s ease;
+.msg-close:hover {
+  opacity: 1;
 }
+
+/* COLORS FOR DIFFERENT MESSAGE TYPES */
+.msg-success { background: #28a745; }
+.msg-error, .msg-danger { background: #dc3545; }
+.msg-warning { background: #ff9800; }
+.msg-info { background: #17a2b8; }
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; transform: translateY(-8px); }
+}
+
+/* Responsive */
+@media (max-width: 1400px) { .whiskey-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 1200px) { .whiskey-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 992px)  { .whiskey-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px)  { .whiskey-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .whiskey-grid { grid-template-columns: repeat(1, 1fr); } }
 </style>
 
 <script>

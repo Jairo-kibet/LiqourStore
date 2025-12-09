@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store'
+    'store',
+    'jazzmin',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,33 @@ MESSAGE_TAGS = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Jairo Admin",
+    "site_header": "Jairo Admin Panel",
+    "site_brand": "Jairo Tech",
+    "welcome_sign": "Welcome to Jairo Tech Admin",
+    "copyright": "Jairo Tech",
+    "search_model": ["auth.User", "store.Whiskey"],
+
+    # Top menu (optional)
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index"},
+        {"name": "Website", "url": "/", "new_window": True},
+    ],
+
+    # Icons for models
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "store.whiskey": "fas fa-wine-bottle",
+        "store.category": "fas fa-list",
+        "store.cart": "fas fa-shopping-cart",
+        "store.order": "fas fa-receipt",
+        "store.wishlist": "fas fa-heart",
+    },
+
+    # Sidebar
+    "navigation_expanded": True,
+}
+

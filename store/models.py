@@ -48,46 +48,24 @@ class Whiskey(models.Model):
         return self.name
     
 
-class Beer(models.Model):
-    CATEGORY_CHOICES = [
-        ('Red wine', 'Red wine'),
-        ('White wine', 'White wine'),
-        ('Rose wine', 'Rose wine'),
-        ('Sparkling wine', 'Sparkling wine'),
-        ('Single malt', 'Single malt'),
-        ('Port wine', 'Port wine'),
-        ('Red sweet wine', 'Red sweet wine'),
-        ('White sweet wine', 'White sweet wine'),
-        ('White dry wine', 'White wine'),
-        ('Red dry wine', 'Red dry wine'),
-        
-       # add more
-    ]
-    name = models.CharField(max_length=255)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='Scotch')
-    abv = models.CharField(max_length=20)
-    volume = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='beer/')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
-    
-
 class Gin(models.Model):
     CATEGORY_CHOICES = [
         ('London dry gin', 'London dry gin'),
         ('Flavoured gin', 'Flavoured gin'),
         ('Sloe gin', 'Sloe gin'),
         ('Plymouth gin', 'Plymouth gin'),
+        ('Old Tom gin', 'Old Tom gin'),
+        ('Genever gin', 'Genever gin'),
+        ('Navy strength gin', 'Navy strength gin'),
+        ('Barrel-aged gin', 'Barrel-aged gin'),
+        ('New Western gin', 'New Western gin'),
+        ('Botanical gin', 'Botanical gin'),
+        ('Contemporary gin', 'Contemporary gin'),
         ('International style gin', 'International style gin'),
-      
-        
-       # add more
     ]
+
     name = models.CharField(max_length=255)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='Scotch')
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='London dry gin')
     abv = models.CharField(max_length=20)
     volume = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -98,6 +76,27 @@ class Gin(models.Model):
         return self.name
 
 
+
+class Beer(models.Model):
+    CATEGORY_CHOICES = [
+        ('lager', 'Lager'),
+        ('stout', 'Stout'),
+        ('ale', 'Ale'),
+        ('pilsner', 'Pilsner'),
+        ('cider', 'Cider'),
+        ('other', 'Other'),
+    ]
+
+    name = models.CharField(max_length=200)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='Ale')
+    abv = models.CharField(max_length=20)
+    volume = models.CharField(max_length=50)  # e.g., "500ml", "330ml"
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='beers/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
 
 class Wishlist(models.Model):
     whiskey = models.ForeignKey('Whiskey', on_delete=models.CASCADE)

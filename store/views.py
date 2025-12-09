@@ -55,12 +55,14 @@ def whisky(request):
     return render(request, 'whisky.html', {'whiskeys': whiskeys})
 
 def gin(request):
-    gin = Gin.objects.all()
-    return render(request, 'gin.html', {'gin': gin})
+    gins = Gin.objects.all()
+    return render(request, 'gin.html', {'gins': gins})
+
 
 def beer(request):
     beers = Beer.objects.all()
-    return render(request, 'beer.html', {'beer': beer})
+    return render(request, 'beer.html', {'beers': beers})
+
 
 from django.http import JsonResponse
 

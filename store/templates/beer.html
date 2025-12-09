@@ -1,18 +1,197 @@
 {% extends "index.html" %}
 {% load static %}
 
-{% block current_page %}Whiskey{% endblock current_page %}
-
-{% block header_link %}
-{% endblock header_link %}
+{% block current_page %}Beer{% endblock current_page %}
+{% block header_link %}{% endblock header_link %}
 
 {% block body %}
 {% block navigation %}
 {{ block.super }}
 {% endblock navigation %}
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- HERO SECTION -->
+<section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'assets/images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-end justify-content-center">
+      <div class="col-md-9 ftco-animate mb-5 text-center">
+        <p class="breadcrumbs mb-0">
+          <span class="mr-2"><a href="{% url 'index' %}">Home <i class="fa fa-chevron-right"></i></a></span>
+          <span>Beer <i class="fa fa-chevron-right"></i></span>
+        </p>
+        <h2 class="mb-0 bread">Beers</h2>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Messages -->
+{% if messages %}
+<div class="top-messages">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Beer products grid -->
+<section class="ftco-section">
+  <div class="container-fluid">
+    <div class="whiskey-grid text-center">
+      {% for beer in beers %}
+      <div class="whiskey-item">
+        <div class="product ftco-animate">
+          <div class="img d-flex align-items-center justify-content-center" 
+               style="background-image: url('{{ beer.image.url }}');"></div>
+
+          <div class="text text-center product-details">
+            {% if beer.sale_price %}
+              <span class="sale">Sale</span>
+            {% endif %}
+
+            <p class="text-muted category-abv">
+              {{ beer.category|default:"Beer" }} | {{ beer.abv }}
+            </p>
+
+            <h3 class="whiskey-name">{{ beer.name }}</h3>
+
+            <p class="volume-price">{{ beer.volume }} | 
+              <span>Ksh {{ beer.sale_price|default:beer.price }}</span>
+            </p>
+
+            {% if beer.description %}
+              <p class="whiskey-desc">{{ beer.description }}</p>
+            {% endif %}
+
+            <!-- Icons -->
+            <div class="d-flex justify-content-center mt-3 icon-buttons">
+              <form action="{% url 'add_to_cart' beer.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn cart-btn">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </button>
+              </form>
+
+              <form action="{% url 'add_to_wishlist' beer.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="icon-btn wishlist-btn">
+                  <i class="fa-regular fa-heart"></i>
+                </button>
+              </form>
+
+              <!-- Quick View Button -->
+              <button type="button" class="icon-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal{{ beer.id }}">
+                  <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick View Modal -->
+      <div class="modal fade" id="quickViewModal{{ beer.id }}" tabindex="-1" aria-labelledby="quickViewLabel{{ beer.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="quickViewLabel{{ beer.id }}">{{ beer.name }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body d-flex flex-column flex-md-row">
+              <div class="modal-img me-md-4 mb-3 mb-md-0" style="flex:1;">
+                <img src="{{ beer.image.url }}" alt="{{ beer.name }}" style="width:100%; border-radius:10px;">
+              </div>
+              <div class="modal-details" style="flex:1;">
+                <p class="category-abv">{{ beer.category|default:"Beer" }} | {{ beer.abv }}</p>
+                <h3 class="whiskey-name">{{ beer.name }}</h3>
+                <p class="volume-price">{{ beer.volume }} | <span>Ksh {{ beer.price }}</span></p>
+                {% if beer.description %}
+                <p class="whiskey-desc">{{ beer.description }}</p>
+                {% endif %}
+                <div class="d-flex mt-3 gap-3">
+                  <form action="{% url 'add_to_cart' beer.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                  </form>
+                  <form action="{% url 'add_to_wishlist' beer.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">Add to Wishlist</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Your CSS stays unchanged -->
+<style>
+/* Whiskey Grid Full Width */
+.whiskey-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+/* Item and Product styling */
+.whiskey-item { display: flex; justify-content: center; }
+.product { width: 100%; height: auto; border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px; background: #fff; display: flex; flex-direction: column; align-items: center; }
+.product .img { width: 100%; height: 400px; background-size: cover; background-position: center; border-radius: 10px; margin-bottom: 10px; }
+.product-details p, .product-details h3 { margin: 2px 0; line-height: 1.2; }
+
+.category-abv { font-style: italic; color: #888; font-size: 14px; }
+.whiskey-name { font-weight: bold; font-size: 16px; color: #222; }
+.volume-price { font-size: 14px; color: #333; }
+.volume-price span { font-weight: bold; }
+.whiskey-desc { font-size: 12px; color: #555; margin-top: 4px; }
+
+.icon-buttons { gap: 15px; flex-wrap: wrap; }
+.icon-buttons .icon-btn { width: 40px; height: 40px; font-size: 18px; color: #333; display: flex; justify-content: center; align-items: center; border: none; background: none; cursor: pointer; transition: 0.3s; }
+.icon-buttons .icon-btn:hover { color: orange; transform: scale(1.2); }
+
+.sale { background: #ff0000; color: #fff; padding: 2px 6px; font-size: 12px; border-radius: 5px; display: inline-block; margin-bottom: 5px; }
+
+.top-messages { 
+    width: 100%;
+    max-width: 500px; 
+    margin: 20px auto; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+.top-messages .alert { 
+    border-radius: 10px; 
+    padding: 1rem 1.3rem; 
+    font-size: 1rem; 
+    font-weight: 500; 
+    color: #ff0b0b; 
+    text-align: center; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25); 
+    border: none; 
+}
+.top-messages .alert-success { background: #28a745; }
+.top-messages .alert-danger { background: #dc3545; }
+.top-messages .alert .close { color: #fff; opacity: 0.9; font-size: 1.3rem; line-height: 1; }
+.top-messages .alert .close:hover { opacity: 1; }
+
+@media (max-width: 1400px) { .whiskey-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 1200px) { .whiskey-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 992px)  { .whiskey-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px)  { .whiskey-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .whiskey-grid { grid-template-columns: repeat(1, 1fr); } }
+</style>
 
 {% block footer %}
 {{ block.super }}
